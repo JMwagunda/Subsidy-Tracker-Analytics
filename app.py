@@ -1153,64 +1153,64 @@ def display_fraud_detection():
             'Amount (NGN)', 'Combined_Risk_Score', 'Risk_Category'
         ]])
         
-        # Allow user to select a case for detailed analysis
-        st.markdown("#### Risk Analysis Explanation")
+        # # Allow user to select a case for detailed analysis
+        # st.markdown("#### Risk Analysis Explanation")
         
-        selected_id = st.selectbox(
-            "Select a beneficiary ID for detailed risk analysis:",
-            high_risk['National_ID'].unique()
-        )
+        # selected_id = st.selectbox(
+        #     "Select a beneficiary ID for detailed risk analysis:",
+        #     high_risk['National_ID'].unique()
+        # )
         
-        if selected_id:
-            # Get the selected case
-            selected_case = high_risk[high_risk['National_ID'] == selected_id].iloc[0]
+        # if selected_id:
+        #     # Get the selected case
+        #     selected_case = high_risk[high_risk['National_ID'] == selected_id].iloc[0]
             
-            # Get the model and training data
-            best_model = fraud_results[best_model_name]['model']
-            X_train = fraud_results[best_model_name]['X_train']
+        #     # Get the model and training data
+        #     best_model = fraud_results[best_model_name]['model']
+        #     X_train = fraud_results[best_model_name]['X_train']
             
-            # Display the risk score
-            risk_score = selected_case['Combined_Risk_Score']
+        #     # Display the risk score
+        #     risk_score = selected_case['Combined_Risk_Score']
             
-            if risk_score >= 0.7:
-                risk_class = "risk-high"
-                risk_text = "High Risk"
-            elif risk_score >= 0.3:
-                risk_class = "risk-medium"
-                risk_text = "Medium Risk"
-            else:
-                risk_class = "risk-low"
-                risk_text = "Low Risk"
+        #     if risk_score >= 0.7:
+        #         risk_class = "risk-high"
+        #         risk_text = "High Risk"
+        #     elif risk_score >= 0.3:
+        #         risk_class = "risk-medium"
+        #         risk_text = "Medium Risk"
+        #     else:
+        #         risk_class = "risk-low"
+        #         risk_text = "Low Risk"
             
-            st.markdown(f"### Case Details for {selected_id}")
-            st.markdown(f"<p class='{risk_class}'>Risk Category: {risk_text} (Score: {risk_score:.3f})</p>", unsafe_allow_html=True)
+    #         st.markdown(f"### Case Details for {selected_id}")
+    #         st.markdown(f"<p class='{risk_class}'>Risk Category: {risk_text} (Score: {risk_score:.3f})</p>", unsafe_allow_html=True)
             
-            # Display basic case information
-            st.markdown("#### Transaction Summary:")
-            st.markdown(f"**Amount:** ₦{selected_case.get('Amount (NGN)', 'N/A'):,.0f}")
-            st.markdown(f"**Region:** {selected_case.get('Region', 'N/A')}")
-            st.markdown(f"**Channel:** {selected_case.get('Channel', 'N/A')}")
-            st.markdown(f"**Days Since Last Transaction:** {selected_case.get('Days_Since_Last_Transaction', 'N/A')}")
-            st.markdown(f"**Wallet Balance:** ₦{selected_case.get('Wallet_Balance (NGN)', 'N/A'):,.0f}")
-    else:
-        st.info("No high-risk cases detected.")
+    #         # Display basic case information
+    #         st.markdown("#### Transaction Summary:")
+    #         st.markdown(f"**Amount:** ₦{selected_case.get('Amount (NGN)', 'N/A'):,.0f}")
+    #         st.markdown(f"**Region:** {selected_case.get('Region', 'N/A')}")
+    #         st.markdown(f"**Channel:** {selected_case.get('Channel', 'N/A')}")
+    #         st.markdown(f"**Days Since Last Transaction:** {selected_case.get('Days_Since_Last_Transaction', 'N/A')}")
+    #         st.markdown(f"**Wallet Balance:** ₦{selected_case.get('Wallet_Balance (NGN)', 'N/A'):,.0f}")
+    # else:
+    #     st.info("No high-risk cases detected.")
     
-    # Download fraud report
-    st.markdown("### Export Fraud Report")
+    # # Download fraud report
+    # st.markdown("### Export Fraud Report")
     
-    if st.button("Generate Fraud Report"):
-        # Create a report dataframe
-        fraud_report = df_with_predictions[[
-            'National_ID', 'Age', 'Gender', 'Region', 'Income_Level', 
-            'Amount (NGN)', 'Predicted_Fraud', 'Fraud_Probability', 
-            'Anomaly_Predicted', 'Anomaly_Score', 'Combined_Risk_Score', 'Risk_Category'
-        ]].sort_values('Combined_Risk_Score', ascending=False)
+    # if st.button("Generate Fraud Report"):
+    #     # Create a report dataframe
+    #     fraud_report = df_with_predictions[[
+    #         'National_ID', 'Age', 'Gender', 'Region', 'Income_Level', 
+    #         'Amount (NGN)', 'Predicted_Fraud', 'Fraud_Probability', 
+    #         'Anomaly_Predicted', 'Anomaly_Score', 'Combined_Risk_Score', 'Risk_Category'
+    #     ]].sort_values('Combined_Risk_Score', ascending=False)
         
-        # Create a CSV file
-        csv = fraud_report.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()
-        href = f'<a href="data:file/csv;base64,{b64}" download="fraud_report.csv">Download Fraud Report</a>'
-        st.markdown(href, unsafe_allow_html=True)
+    #     # Create a CSV file
+    #     csv = fraud_report.to_csv(index=False)
+    #     b64 = base64.b64encode(csv.encode()).decode()
+    #     href = f'<a href="data:file/csv;base64,{b64}" download="fraud_report.csv">Download Fraud Report</a>'
+    #     st.markdown(href, unsafe_allow_html=True)
 
 def display_clustering():
     """Display the clustering analysis page"""
@@ -1429,24 +1429,24 @@ def display_single_prediction():
         
         with col1:
             st.markdown("**Personal Information**")
-            age = st.number_input("Age", min_value=18, max_value=100, value=35)
+            age = st.number_input("Age", min_value=18, max_value=100, value=41)
             gender = st.selectbox("Gender", ["Male", "Female"])
             region = st.selectbox("Region", ["Lagos", "Kano", "Rivers", "Oyo", "Kaduna", "Yobe"])
             income_level = st.selectbox("Income Level", ["Low", "Middle", "High"])
-            household_dependents = st.number_input("Household Dependents", min_value=0, max_value=20, value=3)
+            household_dependents = st.number_input("Household Dependents", min_value=0, max_value=20, value=6)
         
         with col2:
             st.markdown("**Transaction Information**")
-            amount = st.number_input("Transaction Amount (NGN)", min_value=0.0, value=4000.0, step=100.0)
+            amount = st.number_input("Transaction Amount (NGN)", min_value=0.0, value=5756.0, step=100.0)
             channel = st.selectbox("Transaction Channel", ["Bank Transfer", "Mobile Money", "Cash Pickup"])
             subsidy_type = st.selectbox("Subsidy Type", ["Energy", "Food", "Housing"])
-            wallet_balance = st.number_input("Current Wallet Balance (NGN)", min_value=0.0, value=5000.0, step=100.0)
-            avg_monthly_balance = st.number_input("Average Monthly Wallet Balance (NGN)", min_value=0.0, value=5000.0, step=100.0)
+            wallet_balance = st.number_input("Current Wallet Balance (NGN)", min_value=0.0, value=3894.0, step=100.0)
+            avg_monthly_balance = st.number_input("Average Monthly Wallet Balance (NGN)", min_value=0.0, value=2918.0, step=100.0)
         
         with col3:
             st.markdown("**Behavioral Information**")
-            days_since_last = st.number_input("Days Since Last Transaction", min_value=0, max_value=365, value=7)
-            energy_consumption = st.number_input("Monthly Energy Consumption (kWh)", min_value=0.0, value=100.0, step=10.0)
+            days_since_last = st.number_input("Days Since Last Transaction", min_value=0, max_value=365, value=62)
+            energy_consumption = st.number_input("Monthly Energy Consumption (kWh)", min_value=0.0, value=73.0, step=10.0)
             wallet_status = st.selectbox("Wallet Activity Status", ["Active", "Inactive", "Suspicious"])
             subsidy_eligibility = st.selectbox("Subsidy Eligibility", ["Eligible", "Not Eligible"])
         
